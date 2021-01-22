@@ -1,0 +1,141 @@
+<div class="container">
+    <div class="row">
+        <!-- product list div -->
+        <div class="well col-xs-6 col-sm-6 col-md-12 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <!-- <h4>Checkout Now</h4> -->
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Medicine</th>
+                            <th>#</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let medicine of medicineList;">
+                            <td class="col-md-9">
+                                <em>{{medicine.medicineName}}</em>
+                            </td>
+                            <td class="col-md-1" style="text-align: center"> {{medicineservice.getMedicineCount(medicine)}} </td>
+                            <td class="col-md-1 text-center">{{medicine.medicinePrice | currency: 'INR'}}</td>
+                            <td class="col-md-1 text-center">{{medicine.medicinePrice * medicineservice.getMedicineCount(medicine) | currency : 'INR'}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <p>
+                                    <strong>Subtotal: </strong>
+                                </p>
+                                <p>
+                                    <strong>Shipping Charge: </strong>
+                                </p>
+                            </td>
+                            <td class="text-center">
+                                <p>
+                                    <strong>{{medicineservice.totalCartAmount | currency: 'INR'}}</strong>
+                                </p>
+                                <p>
+                                    <strong>-Nil</strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td class="text-right">
+                                <h4><strong>Total: </strong></h4>
+                            </td>
+                            <td class="text-center text-danger">
+                                <h4><strong>{{medicineservice.totalCartAmount | currency: 'INR'}}</strong></h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!--  -->
+            <div class="row" style="padding-left: 20px;">
+                <div class="panel panel-default col-xs-6 col-sm-6 col-md-6">
+                    <div class="panel-heading" style="padding-bottom: 20px;">
+                        <span class="panel-title">
+                            Payment Details
+                        </span>
+                        <hr>
+                    </div>
+                    <div class="panel-body" style="padding-bottom: 10px;">
+                        <form [formGroup]="checkoutForm" (ngSubmit)="submitForm(checkoutForm)">
+                            <div class="form-group">
+                                <label for="deliveryAddress"><span style="color: red;">*</span>Delivery Address</label>
+                                <div class="input-group">
+                                    <textarea id="deliveryAddress" name="deliveryAddress" class="form-control" formControlName="deliveryAddress"></textarea>
+                                    <!-- <span class="input-group-addon">1111<span class="glyphicon glyphicon-lock">2222</span></span> -->
+                                </div>
+                                <small *ngIf="hasErrors('deliveryAddress')" class="help-block" ngClass="{'has-error':hasErrors('deliveryAddress')}">
+                                    <span style="color:red;" *ngIf="deliveryAddress.errors.required">Delivery Address is Required</span>                                
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" formControlName="cardNumber" placeholder="Valid Card Number" />
+                                    <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> -->
+                                </div>
+                                <small *ngIf="hasErrors('cardNumber')" class="help-block" ngClass="{'has-error':hasErrors('cardNumber')}">
+                                    <span style="color:red;" *ngIf="cardNumber.errors.required">Card Number is Required</span>                                
+                                </small>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="expiryMonth">Expiry Date</label>
+                                        <div>
+                                            <input type="text" class="form-control" id="expiryMonth" name="expiryMonth" formControlName="expiryMonth" placeholder="eg: Nov 2013, 11/2013" />
+                                        </div>
+                                        <small *ngIf="hasErrors('expiryMonth')" class="help-block" ngClass="{'has-error':hasErrors('expiryMonth')}">
+                                            <span style="color:red;" *ngIf="expiryMonth.errors.required">Card Expiry Date is Required</span>                                
+                                        </small>
+                                        <div class="form-group">
+                                            <label for="cvCode">CVV Code</label>
+                                            <input type="password" class="form-control" id="cvvCode" name="cvvCode" formControlName="cvvCode" placeholder="***" />
+                                        </div>
+                                        <small *ngIf="hasErrors('cvvCode')" class="help-block" ngClass="{'has-error':hasErrors('cvvCode')}">
+                                            <span style="color:red;" *ngIf="cvvCode.errors.required">CVV Code is Required</span>                                
+                                        </small>
+                                        <input type="hidden" class="form-control" id="amountPayed" name="amountPayed" formControlName="amountPayed" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg btn-block">
+                                Pay Now   
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+
+
+        </div>
+        <!-- end of product list div -->
+
+
+        <hr>
+
+
+        <!-- payment div -->
+        <!-- <div class="well col-xs-6 col-sm-6 col-md-12 col-xs-offset-1 col-sm-offset-1 col-md-offset-3"> -->
+        <div class="col-sm-10 col-md-10">
+
+        </div>
+        <!-- </div> -->
+        <!-- end of payment div -->
+
+        <!-- pay now button div -->
+        <div class="col-sm-12 col-md-12">
+
+        </div>
+        <!-- end of payment button div -->
+    </div>
+</div>

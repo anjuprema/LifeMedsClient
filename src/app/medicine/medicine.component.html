@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-sm-6 col-lg-4 col-xl-3" style="padding-bottom: 10px;" *ngFor="let medicine of medicineData">
+        <div class="card" style="width: 15rem;">
+            <div *ngIf="medicine.picturePath!=''">
+                <img src='{{setting.imageUrl}}/{{medicine.idMedicine}}/{{medicine.picturePath}}' class="card-img-top" style="width: 200px; height:200px; padding:10px;">
+            </div>
+            <div *ngIf="medicine.picturePath==''">
+                <img src='{{imagePath}}/no-image.png' class="card-img-top" style="width: 200px; height:200px; padding:10px;">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a routerLink="/details/{{medicine.idMedicine}}">
+                        {{getSubString(medicine.medicineName,18)}}<span *ngIf="medicine.medicineName.length > 18">...</span>
+                    </a>
+                </h5>
+                <p class="card-text">{{medicine.medicinePrice | currency: 'INR'}}</p>
+                <span class="card-text">{{getSubString(medicine.medicineDescription,50)}}</span>
+                <span *ngIf="medicine.medicineDescription.length > 50">...</span>
+                <!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option1" > -
+                    </label> -->
+                <p>
+                    <button class="btn btn-danger my-2 my-sm-0" (click)="medicineservice.setCartMedicine(medicine)"> Add To Cart</button>
+                </p>
+                <!-- <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option3"> +
+                    </label>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
